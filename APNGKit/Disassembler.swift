@@ -55,11 +55,11 @@ public enum DisassemblerError: ErrorType {
 
 
 public struct APNGContent {
-    let images : [UIImage]
-    let size : CGSize
-    let repeatCount : Int
-    let bitDepth : Int
-    let firstFrameHidden : Bool
+    public let images : [UIImage]
+    public let size : CGSize
+    public let repeatCount : Int
+    public let bitDepth : Int
+    public let firstFrameHidden : Bool
     
 }
 
