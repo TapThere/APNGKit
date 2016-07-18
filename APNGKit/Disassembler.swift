@@ -53,6 +53,16 @@ public enum DisassemblerError: ErrorType {
     case FileSizeExceeded
 }
 
+
+public struct APNGContent {
+    let images : [UIImage]
+    let size : CGSize
+    let repeatCount : Int
+    let bitDepth : Int
+    let firstFrameHidden : Bool
+    
+}
+
 /**
 *  Disassemble APNG data. 
 *  See APNG Specification: https://wiki.mozilla.org/APNG_Specification for defination of APNG.
@@ -95,6 +105,14 @@ public struct Disassembler {
             bitDepth: bitDepth, repeatCount: repeatCount, firstFrameHidden: firstFrameHidden)
         return apng
     }
+    
+    public mutating func decode(scale: CGFloat = 1) throws -> APNGContent
+    {
+        let (frames, size, repeatCount, bitDepth, firstFrameHidden) = try decodeToElements(scale)
+        
+        return APNGContent(images: frames.map { return $0.image! }, size: size, repeatCount: repeatCount, bitDepth: bitDepth, firstFrameHidden: firstFrameHidden)
+    }
+    
     
     mutating func decodeToElements(scale: CGFloat = 1) throws
             -> (frames: [Frame], size: CGSize, repeatCount: Int, bitDepth: Int, firstFrameHidden: Bool)
