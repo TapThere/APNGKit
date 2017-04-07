@@ -88,7 +88,7 @@ public enum DisassemblerError: Error {
 *  This Disassembler is using a patched libpng with supporting of apng to read APNG data.
 *  See https://github.com/onevcat/libpng for more.
 */
-class Disassembler {
+public class Disassembler {
     fileprivate(set) var reader: Reader
     let originalData: Data
     
