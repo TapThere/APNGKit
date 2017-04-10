@@ -34,7 +34,7 @@
 *  Represents a frame in an APNG file. 
 *  It contains a whole IDAT chunk data for a PNG image.
 */
-class Frame {
+public class Frame {
     
     static var allocCount = 0
     static var deallocCount = 0
@@ -113,7 +113,7 @@ class Frame {
 }
 
 extension Frame: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         return "<Frame: \(self.bytes)))> duration: \(self.duration), length: \(length)"
     }
 }
@@ -131,7 +131,7 @@ extension Frame: CustomDebugStringConvertible {
         return nil
     }
     
-    var debugDescription: String {
+    public var debugDescription: String {
         return "\(description)\ndata: \(String(describing: data))"
     }
 }
