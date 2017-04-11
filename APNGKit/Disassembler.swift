@@ -144,7 +144,7 @@ public struct Disassembler {
             throw DisassemblerError.pngStructureFailure
         }
         
-        if setjmp(png_jmpbuf(pngPointer)) != 0 {
+        if png_jmpbuf(pngPointer).pointee != 0 {
             throw DisassemblerError.pngInternalError
         }
         
