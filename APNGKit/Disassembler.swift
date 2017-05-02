@@ -439,7 +439,7 @@ public class Disassembler {
 }
 
 extension Disassembler: IteratorProtocol {
-    func next() -> Frame? {
+    open func next() -> Frame? {
         if !processing {
             processing = true
             do {
