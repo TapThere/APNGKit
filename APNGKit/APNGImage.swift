@@ -65,7 +65,7 @@ open class APNGImage: NSObject { // For ObjC compatibility
     /// The value of it for a single plain PNG file would be 1.
     public let frameCount: Int
     
-    var frames: [Frame]?
+    public var frames: [Frame]?
     
     // Keep a frame strong reference so it will not get released when using Disassembler
     var currentFrame: Frame?

@@ -27,11 +27,11 @@
 #if os(macOS)
     import Cocoa
     public typealias APNGView = NSView
-    typealias CocoaImage = NSImage
+    public typealias CocoaImage = NSImage
 #elseif os(iOS) || os(watchOS) || os(tvOS)
     import UIKit
     public typealias APNGView = UIView
-    typealias CocoaImage = UIImage
+    public typealias CocoaImage = UIImage
 #endif
     
 @objc public protocol APNGImageViewDelegate {
