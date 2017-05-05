@@ -87,7 +87,7 @@ open class APNGCache : NSObject{
         cacheObject.removeObject(forKey: key as NSString)
     }
     
-    func imageForKey(_ key: String) -> APNGImage? {
+    open func imageForKey(_ key: String) -> APNGImage? {
         return cacheObject.object(forKey: key as NSString)
     }
     
