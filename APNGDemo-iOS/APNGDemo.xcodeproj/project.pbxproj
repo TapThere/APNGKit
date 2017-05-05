@@ -15,7 +15,6 @@
 		4B92AA581E91E4AC00760A61 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B92AA561E91E4AC00760A61 /* TableViewController.swift */; };
 		4B92AA651E91E4E800760A61 /* APNG-cube.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA5A1E91E4E800760A61 /* APNG-cube.apng */; };
 		4B92AA661E91E4E800760A61 /* APNG-Icos4D.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA5B1E91E4E800760A61 /* APNG-Icos4D.apng */; };
-		4B92AA671E91E4E800760A61 /* ball.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA5C1E91E4E800760A61 /* ball.apng */; };
 		4B92AA681E91E4E800760A61 /* elephant_apng.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA5D1E91E4E800760A61 /* elephant_apng.apng */; };
 		4B92AA691E91E4E800760A61 /* elephant_apng@2x.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA5E1E91E4E800760A61 /* elephant_apng@2x.apng */; };
 		4B92AA6A1E91E4E800760A61 /* minimalAPNG.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA5F1E91E4E800760A61 /* minimalAPNG.apng */; };
@@ -43,6 +42,8 @@
 		4B92AAA11E91ED4700760A61 /* over_previous.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA961E91ED4700760A61 /* over_previous.apng */; };
 		4B92AAA21E91ED4700760A61 /* pyani.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA971E91ED4700760A61 /* pyani.apng */; };
 		4B92AAA31E91ED4700760A61 /* spinfox.apng in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AA981E91ED4700760A61 /* spinfox.apng */; };
+		527DD8B41EBA779000CE6441 /* ball.apng in Resources */ = {isa = PBXBuildFile; fileRef = 527DD8B31EBA779000CE6441 /* ball.apng */; };
+		527DD8B51EBA779000CE6441 /* ball.apng in Resources */ = {isa = PBXBuildFile; fileRef = 527DD8B31EBA779000CE6441 /* ball.apng */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -81,7 +82,6 @@
 		4B92AA561E91E4AC00760A61 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		4B92AA5A1E91E4E800760A61 /* APNG-cube.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = "APNG-cube.apng"; sourceTree = "<group>"; };
 		4B92AA5B1E91E4E800760A61 /* APNG-Icos4D.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = "APNG-Icos4D.apng"; sourceTree = "<group>"; };
-		4B92AA5C1E91E4E800760A61 /* ball.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = ball.apng; sourceTree = "<group>"; };
 		4B92AA5D1E91E4E800760A61 /* elephant_apng.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = elephant_apng.apng; sourceTree = "<group>"; };
 		4B92AA5E1E91E4E800760A61 /* elephant_apng@2x.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = "elephant_apng@2x.apng"; sourceTree = "<group>"; };
 		4B92AA5F1E91E4E800760A61 /* minimalAPNG.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = minimalAPNG.apng; sourceTree = "<group>"; };
@@ -109,6 +109,7 @@
 		4B92AA961E91ED4700760A61 /* over_previous.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = over_previous.apng; sourceTree = "<group>"; };
 		4B92AA971E91ED4700760A61 /* pyani.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = pyani.apng; sourceTree = "<group>"; };
 		4B92AA981E91ED4700760A61 /* spinfox.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = spinfox.apng; sourceTree = "<group>"; };
+		527DD8B31EBA779000CE6441 /* ball.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = ball.apng; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,9 +169,9 @@
 		4B92AA591E91E4E800760A61 /* TestImages */ = {
 			isa = PBXGroup;
 			children = (
+				527DD8B31EBA779000CE6441 /* ball.apng */,
 				4B92AA5A1E91E4E800760A61 /* APNG-cube.apng */,
 				4B92AA5B1E91E4E800760A61 /* APNG-Icos4D.apng */,
-				4B92AA5C1E91E4E800760A61 /* ball.apng */,
 				4B92AA5D1E91E4E800760A61 /* elephant_apng.apng */,
 				4B92AA5E1E91E4E800760A61 /* elephant_apng@2x.apng */,
 				4B92AA5F1E91E4E800760A61 /* minimalAPNG.apng */,
@@ -324,8 +325,8 @@
 				4B92AA6F1E91E4E800760A61 /* spinfox.apng in Resources */,
 				4B92AA6A1E91E4E800760A61 /* minimalAPNG.apng in Resources */,
 				4B92AA6E1E91E4E800760A61 /* pyani.apng in Resources */,
+				527DD8B41EBA779000CE6441 /* ball.apng in Resources */,
 				4B92AA691E91E4E800760A61 /* elephant_apng@2x.apng in Resources */,
-				4B92AA671E91E4E800760A61 /* ball.apng in Resources */,
 				4B92AA6D1E91E4E800760A61 /* over_previous.apng in Resources */,
 				4B92AA651E91E4E800760A61 /* APNG-cube.apng in Resources */,
 				4B92AA661E91E4E800760A61 /* APNG-Icos4D.apng in Resources */,
@@ -345,6 +346,7 @@
 				4B92AA801E91E71400760A61 /* Assets.xcassets in Resources */,
 				4B92AAA31E91ED4700760A61 /* spinfox.apng in Resources */,
 				4B92AA9B1E91ED4700760A61 /* ball.apng in Resources */,
+				527DD8B51EBA779000CE6441 /* ball.apng in Resources */,
 				4B92AAA01E91ED4700760A61 /* over_none.apng in Resources */,
 				4B92AA9A1E91ED4700760A61 /* APNG-Icos4D.apng in Resources */,
 				4B92AA831E91E71400760A61 /* Main.storyboard in Resources */,
@@ -581,6 +583,7 @@
 				4B92AA541E91E43500760A61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4B92AA851E91E71400760A61 /* Build configuration list for PBXNativeTarget "APNGDemo-macOS" */ = {
 			isa = XCConfigurationList;
@@ -589,6 +592,7 @@
 				4B92AA871E91E71400760A61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

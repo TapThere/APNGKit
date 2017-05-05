@@ -32,7 +32,7 @@
 
 /// Cache for APNGKit. It will hold apng images initialized from specified init methods.
 /// If the same file is requested later, APNGKit will look it up in this cache first to improve performance.
-open class APNGCache {
+open class APNGCache : NSObject{
     
     fileprivate static let defaultCacheInstance = APNGCache()
     
@@ -44,11 +44,12 @@ open class APNGCache {
     
     let cacheObject = NSCache<NSString, APNGImage>()
     
-    init() {
+    override init() {
         // Limit the cache to prevent memory warning as possible.
         // The cache will be invalidated once a memory warning received, 
         // so we need to keep cache in limitation and try to not trigger the memory warning.
         // See clearMemoryCache() for more.
+        super.init()
         cacheObject.totalCostLimit = 100 * 1024 * 1024 //100 MB
         cacheObject.countLimit = 15
         
