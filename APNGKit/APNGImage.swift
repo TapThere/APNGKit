@@ -40,7 +40,6 @@ public let RepeatForever = -1
 open class APNGImage: NSObject { // For ObjC compatibility
     
     /// Total duration of the animation. If progressive loading is used, this property returns `nil`.
-    @objc
     open var duration: TimeInterval? {
         return frames?.reduce(0.0) {
             $0 + $1.duration
