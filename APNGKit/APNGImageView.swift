@@ -27,10 +27,12 @@
 #if os(macOS)
     import Cocoa
     public typealias APNGView = NSView
+    public typealias CocoaRect = NSRect
     typealias CocoaImage = NSImage
 #elseif os(iOS) || os(watchOS) || os(tvOS)
     import UIKit
     public typealias APNGView = UIView
+    public typealias CocoaRect = CGRect
     typealias CocoaImage = UIImage
 #endif
     
@@ -49,6 +51,8 @@ open class APNGImageView: APNGView {
     /// the animation of original image will stop, and the new one will start automatically.
     open var image: APNGImage? { // Setter should be run on main thread
         didSet {
+            invalidateIntrinsicContentSize()
+
             let animating = isAnimating
             stopAnimating()
             
@@ -76,6 +80,9 @@ open class APNGImageView: APNGView {
     /// A Bool value indicating whether the animation is running.
     open fileprivate(set) var isAnimating: Bool
     
+    /// A Bool value indicating whether the animation was running before app resigned active
+    private var wasAnimating: Bool = false
+    
     /// A Bool value indicating whether the animation should be 
     /// started automatically after an image is set. Default is false.
     open var autoStartAnimation: Bool {
@@ -94,6 +101,14 @@ open class APNGImageView: APNGView {
     
     open weak var delegate: APNGImageViewDelegate?
     
+    open override var intrinsicContentSize: CGSize {
+        if let image = image {
+            return image.size
+        } else {
+            return CGSize.zero
+        }
+    }
+
     var timer: GCDTimer?
     var lastTimestamp: TimeInterval = 0
     var currentPassedDuration: TimeInterval = 0
@@ -136,10 +151,25 @@ open class APNGImageView: APNGView {
         if let frame = image?.next(currentIndex: 0) {
             updateContents(frame.image)
         }
+        
+        addObservers()
     }
     
     deinit {
         stopAnimating()
+        
+        #if os(macOS)
+            // fix issue that `APNGImageView` may cause crash when deinit
+            layer?.contents = nil
+            wantsLayer = false
+        #endif 
+        
+        #if os(iOS)
+            // fix issue that `APNGImageView` may cause crash when deinit
+            layer.contents = nil
+            NotificationCenter.default.removeObserver(self, name:  UIApplication.willResignActiveNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name:  UIApplication.didBecomeActiveNotification, object: nil)
+        #endif
     }
 
     /**
@@ -155,12 +185,29 @@ open class APNGImageView: APNGView {
         isAnimating = false
         autoStartAnimation = false
         super.init(coder: aDecoder)
+        
+        addObservers()
+    }
+    
+    /**
+     Initialize an APNG image view with a specified frame rectangle.
+     
+     - parameter frame: The frame rectangle for the created view object.
+     
+     - returns: An initialized image view object.
+     */
+    public override init(frame: CocoaRect) {
+        isAnimating = false
+        autoStartAnimation = false
+        super.init(frame: frame)
+        
+        addObservers()
     }
     
     /**
     Starts animation contained in the image.
     */
-    open func startAnimating() {
+    @objc open func startAnimating() {
         let mainRunLoop = RunLoop.main
         let currentRunLoop = RunLoop.current
         
@@ -175,7 +222,7 @@ open class APNGImageView: APNGView {
         
         isAnimating = true
         timer = GCDTimer(intervalInSecs: 0.016)
-        timer!.Event = { [weak self] _ in
+        timer!.Event = { [weak self] in
             DispatchQueue.main.sync { self?.tick() }
         }
         timer!.start()
@@ -184,7 +231,7 @@ open class APNGImageView: APNGView {
     /**
     Starts animation contained in the image.
     */
-    open func stopAnimating() {
+    @objc open func stopAnimating() {
         let mainRunLoop = RunLoop.main
         let currentRunLoop = RunLoop.current
         
@@ -201,9 +248,37 @@ open class APNGImageView: APNGView {
         repeated = 0
         lastTimestamp = 0
         currentPassedDuration = 0
+        currentFrameDuration = 0
         currentFrameIndex = 0
         
         timer = nil
+    }
+    
+    /**
+     Stop animation when app send to background.
+     */
+    @objc private func appWillResignActive() {
+        wasAnimating = isAnimating
+        stopAnimating()
+    }
+    
+    /**
+     Start animation when app become active.
+     */
+    @objc func appDidBecomeActive() {
+        if wasAnimating {
+            startAnimating()
+        }
+    }
+    
+    /**
+     Add observers to the notification center to control app status
+     */
+    fileprivate func addObservers() {
+        #if os(iOS)
+            NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        #endif
     }
     
     func tick() {
@@ -213,7 +288,9 @@ open class APNGImageView: APNGView {
         
         let timestamp = CACurrentMediaTime()
         if lastTimestamp == 0 {
-            lastTimestamp = timestamp
+            if isAnimating {
+              lastTimestamp = timestamp
+            }
             return
         }
         
@@ -221,8 +298,11 @@ open class APNGImageView: APNGView {
         lastTimestamp = timestamp
         
         currentPassedDuration += elapsedTime
+        if let duration = image.duration, currentPassedDuration > duration {
+            currentPassedDuration = currentPassedDuration.truncatingRemainder(dividingBy: duration)
+        }
         
-        if currentPassedDuration >= currentFrameDuration {
+        while currentPassedDuration >= currentFrameDuration {
             currentFrameIndex = currentFrameIndex + 1
             
             if currentFrameIndex == image.frameCount {

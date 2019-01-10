@@ -100,7 +100,12 @@ public class Frame {
     func clean() {
         cleaned = true
         bytes.deinitialize(count: length)
+        
+        #if swift(>=4.1)
+        bytes.deallocate()
+        #else
         bytes.deallocate(capacity: length)
+        #endif
     }
     
     func updateCGImageRef(_ width: Int, height: Int, bits: Int, scale: CGFloat, blend: Bool) {
@@ -123,7 +128,7 @@ extension Frame: CustomDebugStringConvertible {
     var data: Data? {
         if let image = image {
             #if os(iOS) || os(watchOS) || os(tvOS)
-                return UIImagePNGRepresentation(image)
+                return image.pngData()
             #elseif os(OSX)
                 return image.tiffRepresentation
             #endif

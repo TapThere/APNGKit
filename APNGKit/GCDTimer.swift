@@ -19,7 +19,7 @@ open class GCDTimer {
         private var _onceTracker = [String]()
         
         // From: http://stackoverflow.com/questions/37886994/dispatch-once-in-swift-3
-        public func doIt(token: String, block:(Void)->Void) {
+        public func doIt(token: String, block:() -> Void) {
             objc_sync_enter(self); defer { objc_sync_exit(self) }
             
             if _onceTracker.contains(token) {
@@ -43,7 +43,7 @@ open class GCDTimer {
     fileprivate static let gcdTimerQueue = DispatchQueue(label: "gcdTimerQueue", attributes: [])
     
     /// Timer Source
-    open let timerSource = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: GCDTimer.gcdTimerQueue)
+    public let timerSource = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: GCDTimer.gcdTimerQueue)
     
     /// Default internal: 1 second
     fileprivate var interval:Double = 1
@@ -61,7 +61,11 @@ open class GCDTimer {
             event = newValue
             
             let time = DispatchTimeInterval.milliseconds(Int(interval * 1000.0))
-            self.timerSource.scheduleRepeating(deadline: DispatchTime.now(), interval: time)
+            #if swift(>=4.0)
+                self.timerSource.schedule(deadline: DispatchTime.now(), repeating: time)
+            #else
+                self.timerSource.scheduleRepeating(deadline: DispatchTime.now(), interval: time)
+            #endif
             self.timerSource.setEventHandler { [weak self] in
                 self?.event()
             }
@@ -83,7 +87,7 @@ open class GCDTimer {
      Start the timer.
      */
     open func start() {
-        once.doIt(token: "com.laex.GCDTimer") { (Void) in
+        once.doIt(token: "com.laex.GCDTimer") {
             self.timerSource.resume()
         }
     }
