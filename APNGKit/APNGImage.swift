@@ -36,9 +36,11 @@ public let RepeatForever = -1
 /// Represents a decoded APNG image. 
 /// You can use instance of this class to get image information or display it on screen with `APNGImageView`.
 /// `APNGImage` can hold an APNG image or a regular PNG image. If latter, there will be only one frame in the image.
+@objc
 open class APNGImage: NSObject { // For ObjC compatibility
     
     /// Total duration of the animation. If progressive loading is used, this property returns `nil`.
+    @objc
     open var duration: TimeInterval? {
         return frames?.reduce(0.0) {
             $0 + $1.duration
@@ -46,16 +48,19 @@ open class APNGImage: NSObject { // For ObjC compatibility
     }
     
     /// Size of the image in point. The scale factor is considered.
+    @objc
     open var size: CGSize {
         return CGSize(width: internalSize.width / scale, height: internalSize.height / scale)
     }
     
     /// Scale of the image.
+    @objc
     public let scale: CGFloat
     
     /// Repeat count of animation of the APNG image.
     /// It is read from APNG data. However, you can change it to modify the loop behaviors.
     /// Set this to `RepeatForever` will make the animation loops forever.
+    @objc
     open var repeatCount: Int
     
     let firstFrameHidden: Bool
@@ -138,6 +143,7 @@ open class APNGImage: NSObject { // For ObjC compatibility
         self.frames = nil
     }
     
+    @objc
     init(apng: APNGImage) {
         // The image init from this method will share the same data trunk with the other apng obj
         if apng.frames != nil {
@@ -216,6 +222,7 @@ open class APNGImage: NSObject { // For ObjC compatibility
      
      - returns: A new image object for the specified file, or nil if the method could not initialize the image from the specified file.
      */
+    @objc
     public convenience init?(contentsOfFile path: String, saveToCache: Bool = false, progressive: Bool = false) {
         
         if let apng = APNGCache.defaultCache.imageForKey(path) { // Found in the cache
@@ -255,6 +262,7 @@ open class APNGImage: NSObject { // For ObjC compatibility
      - returns: A new image object for the specified data, or nil if the method could not initialize the image from the specified data.
      
      */
+    @objc
     public convenience init?(data: Data, progressive: Bool = false) {
         self.init(data: data, scale: 1, progressive: progressive)
     }
@@ -274,6 +282,7 @@ open class APNGImage: NSObject { // For ObjC compatibility
     
      - returns: A new image object for the specified data, or nil if the method could not initialize the image from the specified data.
     */
+    @objc
     public convenience init?(data: Data, scale: CGFloat, progressive: Bool = false) {
         let disassembler = Disassembler(data: data, scale: scale)
         
