@@ -33,7 +33,7 @@
     import UIKit
     public typealias APNGView = UIView
     public typealias CocoaRect = CGRect
-    typealias CocoaImage = UIImage
+    public typealias CocoaImage = UIImage
 #endif
     
 @objc public protocol APNGImageViewDelegate {
