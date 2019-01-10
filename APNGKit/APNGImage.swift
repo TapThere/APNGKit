@@ -188,6 +188,7 @@ open class APNGImage: NSObject { // For ObjC compatibility
      - returns: The image object for the specified file, or nil if the method could not find the specified image.
     
     */
+    @objc
     public convenience init?(named imageName: String, progressive: Bool = false, in bundle: Bundle = .main) {
         if let path = imageName.apng_filePathByCheckingNameExistingInBundle(bundle) {
             self.init(contentsOfFile:path, saveToCache: true, progressive: progressive)
