@@ -47,7 +47,7 @@ public class Frame {
     
     private var cleaned = false
     
-    var image: CocoaImage? {
+    fileprivate(set) public var image: CocoaImage? {
         let unusedCallback: CGDataProviderReleaseDataCallback = { optionalPointer, pointer, valueInt in }
         guard let provider = CGDataProvider(dataInfo: nil, data: bytes, size: length, releaseData: unusedCallback) else {
             return nil
